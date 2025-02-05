@@ -1,0 +1,42 @@
+###GET group
+GET http://localhost:1337/api/groups
+
+###
+////////////////////////////////////////////////////////
+
+###GET group particulier
+GET http://localhost:1337/api/groups/1
+Content-Type: application/json
+
+###
+////////////////////////////////////////////////////////
+
+###POST group
+POST http://localhost:1337/api/groups
+Content-Type: application/json
+
+{
+    "data": {
+      "name": "GROUPE-B"
+    }
+}
+###
+////////////////////////////////////////////////////////
+
+###PUT group
+PUT http://localhost:1337/api/groups/1
+Content-Type: application/json
+
+{
+    "data": {
+        "name": "DEV-B3"
+    }
+}
+
+###
+////////////////////////////////////////////////////////
+
+###DELETE group particulier
+DELETE http://localhost:1337/api/groups/3
+Content-Type: application/json
+

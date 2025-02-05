@@ -1,5 +1,7 @@
 import { Router } from "express";
 import { PrismaClient } from "@prisma/client";
+import bcrypt from "bcrypt";
+import jwt from "jsonwebtoken";
 
 
 export const userRouter = Router();
@@ -8,16 +10,27 @@ const prisma = new PrismaClient();
 
 // POST
 userRouter.post('/register', async (req, res) => {
-  const users = await prisma.user.create({
-    data : {
-      firstname:req.body.data.firstname,
-      lastname: req.body.data.lastname,
-      email: req.body.data.firstname + "." + req.body.data.lastname + "@gmail.com",
-      mtp: req.body.data.mtp
+    const { email } = req.body.data;
+    const userWithEmail = await prisma.user.findFirst({ where: { email } });
+    if (userWithEmail) {
+        res.status(400).json("Email already exists");
+    }else {
+        const hashedPassword = await bcrypt.hash(req.body.data.mtp, 10)
+        await prisma.user.create({
+            data : {
+              firstname:req.body.data.firstname,
+              lastname: req.body.data.lastname,
+              email: req.body.data.firstname + "." + req.body.data.lastname + "@gmail.com",
+              mtp: hashedPassword 
+            }
+        });
     }
-
-  });
-  res.status(201).json(users);
+    const token = jwt.sign(email, process.env.JWT_SECRET!);
+            res.json({
+                token,
+                ...userWithEmail
+            });
+  res.status(201).json("Nouvel utilisateur");
 })
 
 
@@ -75,29 +88,37 @@ userRouter.delete("/:id", async (req, res) => {
 
 //PUT 
 userRouter.put("/:id", async (req, res) => {
-  const userId = parseInt(req.params.id);
+    const userId = parseInt(req.params.id);
+  
+    if (isNaN(userId)) {
+      return res.status(400).json({ message: "Invalid user ID" });
+    }
+  
+    const user = await prisma.user.findUnique({
+      where: { id: userId },
+    });
+  
+    if (!user) {
+      return res.status(404).json({ message: "User not found" });
+    }
+  
+    let hashedPassword = user.mtp; 
+  
+    if (req.body.data.mtp) {
+      hashedPassword = await bcrypt.hash(req.body.data.mtp, 10);
+    }
+  
 
-  if (isNaN(userId)) {
-    return res.status(400).json({ message: "Invalid user ID" });
-  }
-
-  const user = await prisma.user.findUnique({
-    where: { id: userId },
+    const updatedUser = await prisma.user.update({
+      where: { id: userId },
+      data: {
+        lastname: req.body.data.lastname,
+        firstname: req.body.data.firstname,
+        email: req.body.data.email,
+        mtp: hashedPassword,
+      },
+    });
+  
+    res.json(updatedUser);
   });
-
-  if (!user) {
-    return res.status(404).json({ message: "User not found" });
-  }
-
-  const updatedUser = await prisma.user.update({
-    where: { id: userId },
-    data: {
-      lastname: req.body.data.lastname,
-      firstname: req.body.data.firstname,
-      email: req.body.data.email,
-      mtp: req.body.data.mtp
-    },
-  });
-
-  res.json(updatedUser);
-});
+  

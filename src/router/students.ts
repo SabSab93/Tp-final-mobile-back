@@ -13,7 +13,8 @@ studentRouter.post('/', async (req, res) => {
       firstname:req.body.data.firstname,
       lastname: req.body.data.lastname,
       age: req.body.data.age,
-      classRoomId: req.body.data.classRoomId
+      classRoomId: req.body.data.classRoomId,
+
     }
 
   });
@@ -93,7 +94,8 @@ studentRouter.put("/:id", async (req, res) => {
       lastname: req.body.data.lastname,
       firstname: req.body.data.firstname,
       age: req.body.data.age,
-      classRoomId: req.body.data.classRoomId
+      classRoomId: req.body.data.classRoomId,
+      // studentGroups: req.body.data.studentGroups
     },
   });
 
@@ -102,4 +104,29 @@ studentRouter.put("/:id", async (req, res) => {
 
 
 
+//////////////////GROUP////////////////////
 
+studentRouter.post('/:idStudent/groups/:idGroup', async (req, res) => {
+  const group_Id = parseInt(req.params.idGroup);
+  const student_Id = parseInt(req.params.idStudent);
+  if (isNaN(student_Id)) {
+    return res.status(400).json({ message: "Invalid student ID" });
+  }
+
+  const mystudent = await prisma.student.findUnique({
+    where: { id: student_Id },
+  });
+
+  if (!mystudent) {
+    return res.status(404).json({ message: "Student not found" });
+  }
+
+  const studentGroup = await prisma.studentGroup.create({
+    data : {
+      studentId : student_Id,
+      groupId : group_Id,
+    }
+
+  });
+  res.status(201).json(`Letudiant numéro ${studentGroup.studentId} appartient maintenant au groupe ${studentGroup.groupId}`);
+})

@@ -21,17 +21,16 @@ model Student {
   age          Int
   classRoom    ClassRoom? @relation(fields: [classRoomId], references: [id])
   classRoomId   Int
-  StudentGroup StudentGroup[]
+  studentGroups StudentGroup[]
 }
 
 model StudentGroup {
-  StudentId   Int 
-  TeamId      Int
-  name        String
-  student     Student  @relation(fields: [StudentId], references: [id])
-  group       Group    @relation(fields: [TeamId], references: [id])
+  studentId   Int 
+  groupId      Int
+  student     Student  @relation(fields: [studentId], references: [id])
+  group       Group    @relation(fields: [groupId], references: [id])
 
-  @@id([TeamId, StudentId])
+  @@id([groupId, studentId])
 }
 
 model Group {

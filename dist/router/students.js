@@ -21,7 +21,7 @@ exports.studentRouter.post('/', (req, res) => __awaiter(void 0, void 0, void 0, 
             firstname: req.body.data.firstname,
             lastname: req.body.data.lastname,
             age: req.body.data.age,
-            classRoomId: req.body.data.classRoomId
+            classRoomId: req.body.data.classRoomId,
         }
     });
     res.status(201).json(students);
@@ -80,8 +80,30 @@ exports.studentRouter.put("/:id", (req, res) => __awaiter(void 0, void 0, void 0
             lastname: req.body.data.lastname,
             firstname: req.body.data.firstname,
             age: req.body.data.age,
-            classRoomId: req.body.data.classRoomId
+            classRoomId: req.body.data.classRoomId,
+            // studentGroups: req.body.data.studentGroups
         },
     });
     res.json(updatedStudent);
+}));
+//////////////////GROUP////////////////////
+exports.studentRouter.post('/:idStudent/groups/:idGroup', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    const group_Id = parseInt(req.params.idGroup);
+    const student_Id = parseInt(req.params.idStudent);
+    if (isNaN(student_Id)) {
+        return res.status(400).json({ message: "Invalid student ID" });
+    }
+    const mystudent = yield prisma.student.findUnique({
+        where: { id: student_Id },
+    });
+    if (!mystudent) {
+        return res.status(404).json({ message: "Student not found" });
+    }
+    const studentGroup = yield prisma.studentGroup.create({
+        data: {
+            studentId: student_Id,
+            groupId: group_Id,
+        }
+    });
+    res.status(201).json(`Letudiant numéro ${studentGroup.studentId} appartient maintenant au groupe ${studentGroup.groupId}`);
 }));

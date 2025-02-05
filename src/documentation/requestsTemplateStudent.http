@@ -20,7 +20,8 @@ Content-Type: application/json
         "firstname": "John",
         "lastname": "Doe",
         "age": 20,
-        "classRoomId": 4
+        "classRoomId": 4,
+        "studentGroups": 1
     }
 }
 ###
@@ -35,7 +36,7 @@ Content-Type: application/json
         "firstname": "Sabrina",
         "lastname": "Hammadi",
         "age": 31,
-        "classRoomId": 1
+        "classRoomId": 1,
     }
 }
 
@@ -49,5 +50,18 @@ Content-Type: application/json
 ###GET avec auth
 GET http://localhost:1337/api/students
 Content-Type: application/json
-Authorization: BASIC Broly.Admin@gmail.com:tata
+Authorization: BASIC Maitre.Du_Temps@gmail.com:temps
+###
+
+////////////////////////////////////////////////////////
+
+POST http://localhost:1337/api/students/8/groups/2
+Content-Type: application/json
+Authorization: BASIC Maitre.Du_Temps@gmail.com:temps
+###
+
+###GET avec auth
+GET http://localhost:1337/api/students
+Content-Type: application/json
+Authorization: Bearer "09d767d94e3319da7d46db4001a40084fc5f71f06f1707518a35396cbc6852f66baf6105621ff4f8d9fd65e609c35939290706dea7f915b24428f8d1a5df8242"
 ###
