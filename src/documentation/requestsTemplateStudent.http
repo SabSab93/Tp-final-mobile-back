@@ -65,3 +65,8 @@ GET http://localhost:1337/api/students
 Content-Type: application/json
 Authorization: Bearer "09d767d94e3319da7d46db4001a40084fc5f71f06f1707518a35396cbc6852f66baf6105621ff4f8d9fd65e609c35939290706dea7f915b24428f8d1a5df8242"
 ###
+
+GET http://localhost:1337/api/students
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6Ik1haXRyZXNzZS5EdV9UZW1wc0BnbWFpbC5jb20iLCJpYXQiOjE3Mzg3NzA3MjR9.NeSdJpVkDjsgnt1tj-4ndi3UfFVydGr8T4Xus1lIZFI
+###

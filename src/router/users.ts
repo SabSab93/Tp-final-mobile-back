@@ -10,29 +10,26 @@ const prisma = new PrismaClient();
 
 // POST
 userRouter.post('/register', async (req, res) => {
-    const { email } = req.body.data;
-    const userWithEmail = await prisma.user.findFirst({ where: { email } });
-    if (userWithEmail) {
-        res.status(400).json("Email already exists");
-    }else {
-        const hashedPassword = await bcrypt.hash(req.body.data.mtp, 10)
-        await prisma.user.create({
-            data : {
-              firstname:req.body.data.firstname,
+  const { firstname, lastname } = req.body.data;  
+  const email = `${firstname}.${lastname}@gmail.com`;
+  const userWithEmail = await prisma.user.findFirst({ where: { email } });
+  if (userWithEmail) {
+      return res.status(400).json("Email already exists");  
+  } else {
+      const hashedPassword = await bcrypt.hash(req.body.data.mtp, 10);
+      const newUser = await prisma.user.create({
+          data: {
+              firstname: req.body.data.firstname,
               lastname: req.body.data.lastname,
               email: req.body.data.firstname + "." + req.body.data.lastname + "@gmail.com",
               mtp: hashedPassword 
-            }
-        });
-    }
-    const token = jwt.sign(email, process.env.JWT_SECRET!);
-            res.json({
-                token,
-                ...userWithEmail
-            });
-  res.status(201).json("Nouvel utilisateur");
-})
+          }
+      });
 
+      const token = jwt.sign({ email }, process.env.JWT_SECRET!);
+      return res.status(201).json({token});
+  }
+});
 
 // GET
 userRouter.get("/", async (req, res) => {

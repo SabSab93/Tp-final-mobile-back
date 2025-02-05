@@ -21,14 +21,15 @@ exports.userRouter = (0, express_1.Router)();
 const prisma = new client_1.PrismaClient();
 // POST
 exports.userRouter.post('/register', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    const { email } = req.body.data;
+    const { firstname, lastname } = req.body.data;
+    const email = `${firstname}.${lastname}@gmail.com`;
     const userWithEmail = yield prisma.user.findFirst({ where: { email } });
     if (userWithEmail) {
-        res.status(400).json("Email already exists");
+        return res.status(400).json("Email already exists");
     }
     else {
         const hashedPassword = yield bcrypt_1.default.hash(req.body.data.mtp, 10);
-        yield prisma.user.create({
+        const newUser = yield prisma.user.create({
             data: {
                 firstname: req.body.data.firstname,
                 lastname: req.body.data.lastname,
@@ -36,10 +37,9 @@ exports.userRouter.post('/register', (req, res) => __awaiter(void 0, void 0, voi
                 mtp: hashedPassword
             }
         });
+        const token = jsonwebtoken_1.default.sign({ email }, process.env.JWT_SECRET);
+        return res.status(201).json({ token });
     }
-    const token = jsonwebtoken_1.default.sign(email, process.env.JWT_SECRET);
-    res.json(Object.assign({ token }, userWithEmail));
-    res.status(201).json("Nouvel utilisateur");
 }));
 // GET
 exports.userRouter.get("/", (req, res) => __awaiter(void 0, void 0, void 0, function* () {

@@ -47,28 +47,6 @@ const app = (0, express_1.default)();
 //   }
 //   next();
 // };
-// export const monMiddlewareBearer = async (req: any, res: any, next: any) => {
-//   if (!req.headers.authorization) {
-//     return res.status(401).json({ message: 'Authorization header missing' });
-//   }
-//   const authHeader = req.headers.authorization.split(' ');
-//   if (authHeader[0] !== 'Bearer' || authHeader.length !== 2) {
-//     return res.status(401).json({ message: 'Invalid authorization format' });
-//   }
-//   const token = authHeader[1];
-//   const jwtSecret = process.env.JWT_SECRET;
-//   if (!jwtSecret) {
-//     return res.status(500).json({ message: 'JWT_SECRET is not defined in the environment' });
-//   }
-//   const decoded = jwt.verify(token, jwtSecret) as unknown as { email: string };
-//   const user = await prisma.user.findFirst({
-//     where: { email: decoded.email }, 
-//   });
-//   if (!user) {
-//     return res.status(401).json({ message: 'Invalid token or user not found' });
-//   }
-//   next();
-// };
 const monMiddlewareBearer = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
     const fullToken = req.headers.authorization;
     if (!fullToken) {
@@ -90,17 +68,16 @@ const monMiddlewareBearer = (req, res, next) => __awaiter(void 0, void 0, void 0
             }
         }
     }
-    ;
-    app.use((0, cors_1.default)()); // tout le monde à le droit de se connecter
-    app.use(express_1.default.json());
-    const apiRouter = express_1.default.Router();
-    apiRouter.use("/auth", users_1.userRouter);
-    apiRouter.use("/students", exports.monMiddlewareBearer, students_1.studentRouter);
-    apiRouter.use("/classRooms", exports.monMiddlewareBearer, classRooms_1.classRoomRouter);
-    apiRouter.use("/groups", exports.monMiddlewareBearer, groups_1.groupRouter);
-    app.use("/api", apiRouter);
-    app.listen(process.env.PORT, () => {
-        console.log(`Example app listening on port ${process.env.PORT}!`);
-    });
 });
 exports.monMiddlewareBearer = monMiddlewareBearer;
+app.use((0, cors_1.default)());
+app.use(express_1.default.json());
+const apiRouter = express_1.default.Router();
+apiRouter.use("/auth", users_1.userRouter);
+apiRouter.use("/students", exports.monMiddlewareBearer, students_1.studentRouter);
+apiRouter.use("/classRooms", exports.monMiddlewareBearer, classRooms_1.classRoomRouter);
+apiRouter.use("/groups", exports.monMiddlewareBearer, groups_1.groupRouter);
+app.use("/api", apiRouter);
+app.listen(process.env.PORT, () => {
+    console.log(`Example app listening on port ${process.env.PORT}!`);
+});

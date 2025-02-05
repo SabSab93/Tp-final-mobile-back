@@ -51,7 +51,7 @@ model User {
   id        Int        @id @default(autoincrement())
   lastname  String 
   firstname String
-  email     String
+  email     String     
   mtp       String      
 }
 
