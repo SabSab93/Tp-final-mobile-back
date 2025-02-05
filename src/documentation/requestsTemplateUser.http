@@ -1,0 +1,46 @@
+###GET User
+GET http://localhost:1337/api/auth
+
+###
+////////////////////////////////////////////////////////
+
+###GET User particulier
+GET http://localhost:1337/api/auth/1
+Content-Type: application/json
+
+###
+////////////////////////////////////////////////////////
+
+###POST User
+POST http://localhost:1337/api/auth/register
+Content-Type: application/json
+
+{
+    "data": {
+        "firstname": "Broly",
+        "lastname": "Admin",
+        "mtp": "toto"
+    }
+}
+###
+////////////////////////////////////////////////////////
+
+###PUT users
+PUT http://localhost:1337/api/auth/1
+Content-Type: application/json
+
+{
+    "data": {
+        "firstname": "Broly",
+        "lastname": "Admin",
+        "mtp": "tata"
+    }
+}
+
+###
+////////////////////////////////////////////////////////
+
+###DELETE Student particulier
+DELETE http://localhost:1337/api/auth/2
+Content-Type: application/json
+

@@ -1,0 +1,153 @@
+###
+POST http://localhost/api/voitures
+Content-Type: application/json
+
+{
+    "data": {
+        "name": "Peugeot 211",
+        "immatriculation_date": 1998
+    }
+}
+
+###
+GET http://localhost/api/voitures
+
+###
+GET http://localhost/api/voitures/22
+
+###
+PUT http://localhost/api/voitures/2
+Content-Type: application/json
+
+{
+    "data": {
+        "name": "Peugeot 212",
+        "immatriculation_date": 1995
+    }
+}
+
+###
+DELETE http://localhost/api/voitures/2
+
+
+
+###Creer un movie
+POST http://localhost:1337/api/movies
+Content-Type: application/json
+
+{
+    "data": {
+        "name": "Le Voyage de Chihiro",
+        "description":"Chihiro, 10 ans, a tout d’une petite fille capricieuse. Elle s’apprête à emménager avec ses parents dans une nouvelle demeure. Sur la route, la petite famille se retrouve face à un immense bâtiment rouge au centre duquel s’ouvre un long tunnel. De l’autre côté du passage se dresse une ville fantôme. Les parents découvrent dans un restaurant désert de nombreux mets succulents et ne tardent pas à se jeter dessus. Ils se retrouvent alors transformés en cochons. Prise de panique, Chihiro s’enfuit et se dématérialise progressivement. L’énigmatique Haku se charge de lui expliquer le fonctionnement de l’univers dans lequel elle vient de pénétrer. Pour sauver ses parents, la fillette va devoir faire face à la terrible sorcière Yubaba, qui arbore les traits d’une harpie méphistophélique.",
+        "immatriculation_date": 2001
+    }
+}
+
+###Voir les movies
+GET http://localhost:1337/api/movies
+Content-Type: application/json
+
+
+###Voir un movie
+GET http://localhost:1337/api/movies/2
+Content-Type: application/json
+
+
+
+
+###delete movie
+DELETE http://localhost:1337/api/movies/11
+Content-Type: application/json
+
+
+
+###Creer un acteur
+POST http://localhost:1337/api/actors
+Content-Type: application/json
+
+{
+    "data": {
+        "lastname":"Portman",
+        "firstname":"Natalie"
+    }
+}
+
+###voir la liste des acteurs
+GET http://localhost:1337/api/actors
+Content-Type: application/json
+
+
+###Modifier un acteur
+PUT  http://localhost:1337/api/actors/3
+Content-Type: application/json
+
+{
+    "data": {
+        "lastname":"Chaignon",
+        "firstname":"Alexis"
+    }
+}
+
+###DELETE ACTOR 
+DELETE   http://localhost:1337/api/actors/1
+Content-Type: application/json
+
+
+###Rechercher un movie par le nom
+GET http://localhost:1337/api/movies?title=Squid%20Game
+Content-Type: application/json
+
+
+### voiture pagination 
+GET http://localhost:1337/api/movies?sort=title:asc&pagination[start]=0&pagination[limit]=6
+Content-Type: application/json
+
+###GET the first 6 alphabetically
+GET http://localhost:1337/api/voitures?pagination[limit]=2&pagination[start]=1
+Content-Type: application/json
+
+
+### Voir la liste des conducteurs
+GET http://localhost:1337/api/voitures?pagination[limit]=2&pagination[start]=1
+Content-Type: application/json
+
+
+
+### Ajout d'un user
+POST http://localhost:1337/api/auth/register
+Content-Type: application/json
+Authorization: Basic lili
+
+{
+    "data": {
+        "login":"shishi",
+        "mtp":"ladla",
+        "authHeader": "lili"
+    }
+}
+### 
+
+### Verifcation user
+GET http://localhost:1337/api/auth
+Content-Type: application/json
+
+{
+    "data": {
+        "login":"Sabristi",
+        "mtp":"kiwi"
+    }
+}
+### correction
+
+POST http://localhost:1337/api/auth/register
+
+### correction
+GET http://localhost:1337/api/voitures
+Content-Type: application/json
+Authorization: BASIC Sabristi:kiwi
+
+###voir la liste des acteurs avec le middleware
+GET http://localhost:1337/api/actors
+Content-Type: application/json
+Authorization: BASIC Sabristi:kiwi
+###

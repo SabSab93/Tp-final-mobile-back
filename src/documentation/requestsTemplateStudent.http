@@ -1,0 +1,53 @@
+###GET Students
+GET http://localhost:1337/api/students
+
+###
+////////////////////////////////////////////////////////
+
+###GET Student particulier
+GET http://localhost:1337/api/students/2
+Content-Type: application/json
+
+###
+////////////////////////////////////////////////////////
+
+###POST students
+POST http://localhost:1337/api/students
+Content-Type: application/json
+
+{
+    "data": {
+        "firstname": "John",
+        "lastname": "Doe",
+        "age": 20,
+        "classRoomId": 4
+    }
+}
+###
+////////////////////////////////////////////////////////
+
+###PUT students
+PUT http://localhost:1337/api/students/1
+Content-Type: application/json
+
+{
+    "data": {
+        "firstname": "Sabrina",
+        "lastname": "Hammadi",
+        "age": 31,
+        "classRoomId": 1
+    }
+}
+
+###
+////////////////////////////////////////////////////////
+
+###DELETE Student particulier
+DELETE http://localhost:1337/api/students/2
+Content-Type: application/json
+
+###GET avec auth
+GET http://localhost:1337/api/students
+Content-Type: application/json
+Authorization: BASIC Broly.Admin@gmail.com:tata
+###
