@@ -48,25 +48,30 @@ const app = (0, express_1.default)();
 //   next();
 // };
 const monMiddlewareBearer = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
-    const fullToken = req.headers.authorization;
-    if (!fullToken) {
-        res.status(401).send("No token provided");
-    }
-    else {
-        const [typeToken, token] = fullToken.split(" ");
-        if (typeToken !== "Bearer") {
-            res.status(401).send("Invalid token type");
+    try {
+        const fullToken = req.headers.authorization;
+        if (!fullToken) {
+            res.status(401).send("No token provided");
         }
         else {
-            const decoded = jsonwebtoken_1.default.verify(token, process.env.JWT_SECRET);
-            if (decoded) {
-                req.token = token;
-                next();
+            const [typeToken, token] = fullToken.split(" ");
+            if (typeToken !== "Bearer") {
+                res.status(401).send("Invalid token type");
             }
             else {
-                res.status(401).send("Invalid token");
+                const decoded = jsonwebtoken_1.default.verify(token, process.env.JWT_SECRET);
+                if (decoded) {
+                    req.token = token;
+                    next();
+                }
+                else {
+                    res.status(401).send("Invalid token");
+                }
             }
         }
+    }
+    catch (error) {
+        return res.status(401).send("Invalid or expired token");
     }
 });
 exports.monMiddlewareBearer = monMiddlewareBearer;

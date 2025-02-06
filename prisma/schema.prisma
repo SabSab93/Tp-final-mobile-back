@@ -19,7 +19,7 @@ model Student {
   lastname     String
   firstname    String
   age          Int
-  classRoom    ClassRoom? @relation(fields: [classRoomId], references: [id]) //Relation One to many
+  classRoom    ClassRoom? @relation(fields: [classRoomId], references: [id]) //Relation One to many un etudiant appartient à une classe
   classRoomId   Int //Relation One to many
   studentGroups StudentGroup[]
 }
@@ -46,7 +46,7 @@ model Group {
 model ClassRoom {
   id        Int        @id @default(autoincrement())
   name     String 
-  Students Student [] //Relation One to many
+  Students Student [] //Relation One to many une classe possede plusieur etudiants
 }
 
 
