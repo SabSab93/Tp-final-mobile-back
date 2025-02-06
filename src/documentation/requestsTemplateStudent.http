@@ -53,17 +53,19 @@ Content-Type: application/json
 Authorization: BASIC Maitre.Du_Temps@gmail.com:temps
 ###
 
-////////////////////////////////////////////////////////
+//////////////////////////////////////AVEC AUTH BASIC//////////////////////////////////////
 
 POST http://localhost:1337/api/students/8/groups/2
 Content-Type: application/json
 Authorization: BASIC Maitre.Du_Temps@gmail.com:temps
 ###
 
+
+//////////////////////////////////////AVEC AUTH BEARER//////////////////////////////////////
 ###GET avec auth
 GET http://localhost:1337/api/students
 Content-Type: application/json
-Authorization: Bearer "09d767d94e3319da7d46db4001a40084fc5f71f06f1707518a35396cbc6852f66baf6105621ff4f8d9fd65e609c35939290706dea7f915b24428f8d1a5df8242"
+Authorization: Bearer 09d767d94e3319da7d46db4001a40084fc5f71f06f1707518a35396cbc6852f66baf6105621ff4f8d9fd65e609c35939290706dea7f915b24428f8d1a5df8242
 ###
 
 GET http://localhost:1337/api/students

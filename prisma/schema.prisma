@@ -13,14 +13,14 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-
+// GROUP ET STUDENT FORME STUDENTGROUP MANY TO MANY
 model Student {
   id        Int        @id @default(autoincrement())
   lastname     String
   firstname    String
   age          Int
-  classRoom    ClassRoom? @relation(fields: [classRoomId], references: [id])
-  classRoomId   Int
+  classRoom    ClassRoom? @relation(fields: [classRoomId], references: [id]) //Relation One to many
+  classRoomId   Int //Relation One to many
   studentGroups StudentGroup[]
 }
 
@@ -33,6 +33,7 @@ model StudentGroup {
   @@id([groupId, studentId])
 }
 
+
 model Group {
   id        Int        @id @default(autoincrement())
   name     String 
@@ -40,10 +41,12 @@ model Group {
 
   StudentGroup StudentGroup[]
 }
+
+//ONE TO MANY ONE COTE STUDENT ET MANY COTE CLASSROOM
 model ClassRoom {
   id        Int        @id @default(autoincrement())
   name     String 
-  Students Student []
+  Students Student [] //Relation One to many
 }
 
 
@@ -55,3 +58,15 @@ model User {
   mtp       String      
 }
 
+
+//ONE TO ONE
+// model User {
+//   id      Int      @id @default(autoincrement())
+//   profile Profile?
+// }
+
+// model Profile {
+//   id     Int  @id @default(autoincrement())
+//   user   User @relation(fields: [userId], references: [id])
+//   userId Int  @unique // relation scalar field (used in the `@relation` attribute above)
+// }
