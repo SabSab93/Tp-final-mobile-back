@@ -62,7 +62,7 @@ model User {
 //ONE TO ONE
 // model User {
 //   id      Int      @id @default(autoincrement())
-//   profile Profile?
+//   profile Profile?   // ? c'est relation 0
 // }
 
 // model Profile {
