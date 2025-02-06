@@ -10,8 +10,7 @@ const prisma = new PrismaClient();
 
 // POST
 userRouter.post('/register', async (req, res) => {
-  const { firstname, lastname } = req.body.data;  
-  const email = `${firstname}.${lastname}@gmail.com`;
+  const { email} = req.body.data;  
   const userWithEmail = await prisma.user.findFirst({ where: { email } });
   if (userWithEmail) {
       return res.status(400).json("Email already exists");  
@@ -21,7 +20,7 @@ userRouter.post('/register', async (req, res) => {
           data: {
               firstname: req.body.data.firstname,
               lastname: req.body.data.lastname,
-              email: req.body.data.firstname + "." + req.body.data.lastname + "@gmail.com",
+              email: req.body.data.email,
               mtp: hashedPassword 
           }
       });

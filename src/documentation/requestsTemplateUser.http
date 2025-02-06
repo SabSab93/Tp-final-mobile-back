@@ -19,21 +19,24 @@ Content-Type: application/json
     "data": {
         "firstname": "Maitresse",
         "lastname": "Du_Temps",
+        "email": "sabrinahamadi@gmail.com",
         "mtp": "fefe"
     }
 }
+
 ###
 ////////////////////////////////////////////////////////
 
 ###PUT users
-PUT http://localhost:1337/api/auth/3
+PUT http://localhost:1337/api/auth/7
 Content-Type: application/json
 
 {
     "data": {
-        "firstname": "Maitre",
+        "firstname": "Maitressev2",
         "lastname": "Du_Temps",
-        "mtp": "temps"
+        "email": "sabrinahamadi@gmail.com",
+        "mtp": "fefev44"
     }
 }
 

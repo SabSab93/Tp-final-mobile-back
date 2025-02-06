@@ -21,8 +21,7 @@ exports.userRouter = (0, express_1.Router)();
 const prisma = new client_1.PrismaClient();
 // POST
 exports.userRouter.post('/register', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    const { firstname, lastname } = req.body.data;
-    const email = `${firstname}.${lastname}@gmail.com`;
+    const { email } = req.body.data;
     const userWithEmail = yield prisma.user.findFirst({ where: { email } });
     if (userWithEmail) {
         return res.status(400).json("Email already exists");
@@ -33,7 +32,7 @@ exports.userRouter.post('/register', (req, res) => __awaiter(void 0, void 0, voi
             data: {
                 firstname: req.body.data.firstname,
                 lastname: req.body.data.lastname,
-                email: req.body.data.firstname + "." + req.body.data.lastname + "@gmail.com",
+                email: req.body.data.email,
                 mtp: hashedPassword
             }
         });
