@@ -17,26 +17,24 @@ Content-Type: application/json
 
 {
     "data": {
-        "firstname": "Maitresse",
-        "lastname": "Du_Temps",
-        "email": "sabrinahamadi@gmail.com",
-        "mtp": "fefe"
+        "email": "sabrinah_38@hotmail.com",
+        "password": "kiwi",
+        "firstName": "Sabrina",
+        "lastName": "Hammadi"
     }
 }
 
 ###
 ////////////////////////////////////////////////////////
 
-###PUT users
-PUT http://localhost:1337/api/auth/7
+###login users
+POST http://localhost:1337/api/auth/login
 Content-Type: application/json
 
 {
     "data": {
-        "firstname": "Maitressev2",
-        "lastname": "Du_Temps",
-        "email": "sabrinahamadi@gmail.com",
-        "mtp": "fefev44"
+        "email": "sabrinah_38@hotmail.com",
+        "password": "kiwi"
     }
 }
 
