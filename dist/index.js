@@ -19,6 +19,4 @@ const apiRouter = express_1.default.Router();
 apiRouter.use("/auth", users_1.userRouter);
 app.use("/api/batteries", batteries_1.batteryRouter);
 app.use("/api/locations", locations_1.locationRouter);
-app.listen(process.env.PORT, () => {
-    console.log(`Example app listening on port ${process.env.PORT}!`);
-});
+app.listen(process.env.PORT || 10000, () => console.log(`Server listening on ${process.env.PORT || 10000}`));
